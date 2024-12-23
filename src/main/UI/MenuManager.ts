@@ -1,5 +1,5 @@
 import { GraphManager } from "./GraphManager"
-import { Datapack, FileListDatapack, FileSystemDirectoryDatapack } from 'mc-datapack-loader'
+import { Datapack } from 'mc-datapack-loader'
 import { DatapackManager } from "../DatapackManager"
 import { IContextMenuOptions, LiteGraph } from "litegraph.js"
 import { DensityFunction, Identifier, WorldgenRegistries } from "deepslate"
@@ -25,7 +25,7 @@ export class MenuManager {
             var datapack: Datapack
 
             if ("showDirectoryPicker" in window) {
-                datapack = new FileSystemDirectoryDatapack(await window.showDirectoryPicker())
+                datapack = Datapack.fromFileSystemDirectoryHandle(await window.showDirectoryPicker(), 12)
             } else {
                 datapack = await new Promise<Datapack>((resolve) => {
                     const input: any = document.createElement('input')
@@ -33,7 +33,7 @@ export class MenuManager {
                     input.webkitdirectory = true
 
                     input.onchange = async () => {
-                        resolve(new FileListDatapack(Array.from(input.files)))
+                        resolve(Datapack.fromFileList(Array.from(input.files), 12))
                     }
                     input.click()
                 })
@@ -132,7 +132,7 @@ export class MenuManager {
     }
 
     static async save(id?: string, suggested_id?: string): Promise<string | undefined> {
-        if (DatapackManager.datapack.canSave()) {
+        if (await DatapackManager.datapack.canSave()) {
             DatapackManager.datapack.prepareSave()
         }
 
@@ -140,7 +140,7 @@ export class MenuManager {
         if (output.error && !confirm("Some nodes have unconnected inputs, the resulting JSON will be invalid. Continue?"))
             return undefined
 
-        if (DatapackManager.datapack.canSave()) {
+        if (await DatapackManager.datapack.canSave()) {
             if (id === undefined || id === "") {
                 const input_id = prompt("Set id of density function", suggested_id ?? "minecraft:")
 

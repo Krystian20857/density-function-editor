@@ -5,6 +5,7 @@ import { PersistentCacheDensityFunction } from "../DensityFunction/PersistentCac
 import { GraphManager } from "../UI/GraphManager";
 import { MenuManager } from "../UI/MenuManager";
 import { LGraphNodeFixed } from "./LGraphNodeFixed";
+import { ResourceLocation } from "mc-datapack-loader";
 
 export class NamedDensityFunctionNode extends LGraphNodeFixed {
     static title = "Named Density Function"
@@ -25,7 +26,7 @@ export class NamedDensityFunctionNode extends LGraphNodeFixed {
             this.has_change = true
         }, { values: WorldgenRegistries.DENSITY_FUNCTION.keys().sort().map(df => df.toString()) })
         this.addWidget("button", "open", "Open", () => {
-            DatapackManager.datapack.get("worldgen/density_function", this.properties.id).then(json => GraphManager.loadJSON(json, this.properties.id))
+            DatapackManager.datapack.get(ResourceLocation.WORLDGEN_DENSITY_FUNCTION, this.properties.id).then(json => GraphManager.loadJSON(json, this.properties.id))
         })
         this.title = "Named Density Function"
         this.color = "#003300"
