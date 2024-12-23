@@ -1,9 +1,10 @@
 import { Identifier, NoiseGeneratorSettings } from "deepslate";
 import { IContextMenuItem } from "litegraph.js";
-import { CompositeDatapack, Datapack } from "mc-datapack-loader";
+import { AnonymousDatapack, Datapack } from "mc-datapack-loader";
 export declare class DatapackManager {
-    static datapack: CompositeDatapack;
+    static datapack: AnonymousDatapack;
     static vanilla_datapack: Datapack;
+    static opened_datapack: Datapack | null;
     static noise_settings: Map<string, NoiseGeneratorSettings>;
     static init(version: string): Promise<void>;
     static openDatapack(datapack: Datapack): Promise<void>;
