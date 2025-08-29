@@ -129,6 +129,12 @@ export class MenuManager {
             }
         }
 
+        document.getElementById("menu-button-copy")!.onclick = () => {
+            const output = GraphManager.getOutput()
+            const jsonString = stringify(output.json, null, 2)
+             navigator.clipboard.writeText(jsonString);
+        }
+
     }
 
     static async save(id?: string, suggested_id?: string): Promise<string | undefined> {
@@ -188,7 +194,8 @@ export class MenuManager {
                 const bb = new Blob([jsonString], { type: 'text/plain' })
                 const a = document.createElement('a')
                 a.download = id ? id.substr(id.lastIndexOf("/") + 1) + ".json" : "density_function.json"
-                a.href = window.URL.createObjectURL(bb)
+
+                a.href = (URL).createObjectURL(bb)
                 a.click()
                 GraphManager.setSaved()
             }
