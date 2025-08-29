@@ -5,7 +5,7 @@ export declare class DensityFunctionOutputNode extends LGraphNode {
     clonable: boolean;
     block_delete: boolean;
     constructor();
-    computeSize(): [number, number];
+    computeSize(): import("litegraph.js").Vector2;
     getTitle(): string;
     onConnectionsChange(): void;
     onExecute(): void;
