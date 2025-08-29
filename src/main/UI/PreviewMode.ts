@@ -1,4 +1,5 @@
 import { DensityFunction, lerp } from "deepslate";
+import { MathCompat } from "../MathCompat";
 
 
 
@@ -18,7 +19,7 @@ export class PreviewMode{
 
     getColor(value: number, min: number, max: number): [number, number, number] {
         if (min === max) return [128,128,128]
-        const color = Math.clamp((Math.floor(((value - min) / (max - min)) * 256)), 0, 255)
+        const color = MathCompat.clamp((Math.floor(((value - min) / (max - min)) * 256)), 0, 255)
         return [color, color, color]
     }
 
@@ -52,10 +53,10 @@ export namespace PreviewMode{
         getColor(value: number, min: number, max: number): [number, number, number]{
             const scale = 1
             if (value < 0){
-                const v = Math.clamp(Math.floor(-value / scale * 256), 0, 255)
+                const v = MathCompat.clamp(Math.floor(-value / scale * 256), 0, 255)
                 return [0,0,v]
             } else {
-                const v = Math.clamp(Math.floor((1 - (value / scale)) * 256), 0, 255)
+                const v = MathCompat.clamp(Math.floor((1 - (value / scale)) * 256), 0, 255)
                 return [255,v,v]
             }
         }

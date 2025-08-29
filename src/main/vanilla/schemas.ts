@@ -140,7 +140,10 @@ export const schemas = new Map(Object.entries({
         to_y: "number",
         from_value: "number",
         to_value: "number",
-    }
+    },
+    'abs_x': {},
+    'abs_y': {},
+    'abs_z': {},
 }))
 
 export const noise_router_fields = [

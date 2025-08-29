@@ -2,6 +2,7 @@
 import { CubicSpline } from 'deepslate';
 import { IWidget, LGraphCanvas, LGraphNode, Vector2, WidgetCallback, widgetTypes } from 'litegraph.js'
 import { IdentityNumberFunction } from '../util';
+import { MathCompat } from '../MathCompat';
 
 export class SplineWidget implements IWidget<CubicSpline.MultiPoint<number>>{
     name: string;
@@ -206,8 +207,8 @@ export class SplineWidget implements IWidget<CubicSpline.MultiPoint<number>>{
                     this.stopExpand("vertical")
                 }
 
-                const location = Math.clamp(this.posToInput(pos[0], this.widged_width), this.min_input, this.max_input)
-                const value = Math.clamp(this.posToOutput(pos[1], this.widged_width), this.min_value, this.max_value)
+                const location = MathCompat.clamp(this.posToInput(pos[0], this.widged_width), this.min_input, this.max_input)
+                const value = MathCompat.clamp(this.posToOutput(pos[1], this.widged_width), this.min_value, this.max_value)
                 const derivative = this.value.derivatives[this.dragging_id]
 
                 
@@ -248,8 +249,8 @@ export class SplineWidget implements IWidget<CubicSpline.MultiPoint<number>>{
         return [width, width-20+15];
     }
 
-    private expand_timer_vertical?: NodeJS.Timer = undefined
-    private expand_timer_horizontal?: NodeJS.Timer = undefined
+    private expand_timer_vertical?: ReturnType<typeof setInterval> = undefined
+    private expand_timer_horizontal?: ReturnType<typeof setInterval> = undefined
     private startExpand(direction: "left"|"right"|"up"|"down"){
         if ((direction === "left" || direction === "right") && !this.expand_timer_horizontal){
                 this.expand_timer_horizontal = setInterval(() => {
@@ -287,7 +288,7 @@ export class SplineWidget implements IWidget<CubicSpline.MultiPoint<number>>{
         }
     }
 
-    private shrink_timer?: NodeJS.Timer = undefined
+    private shrink_timer?: ReturnType<typeof setInterval> = undefined
     private startShrink(){
         if (!this.shrink_timer){
             this.shrink_timer = setInterval(() => {
