@@ -131,7 +131,8 @@ export class MenuManager {
 
         document.getElementById("menu-button-copy")!.onclick = () => {
             const output = GraphManager.getOutput()
-            const jsonString = stringify(output.json, null, 2)
+            let jsonString = stringify(output.json, null, 2)
+            jsonString = jsonString.replace(/\\"|"(?:\\"|[^"])*"|(\/\/.*|\/\*[\s\S]*?\*\/)/g, (m, g) => g ? "" : m);
              navigator.clipboard.writeText(jsonString);
         }
 

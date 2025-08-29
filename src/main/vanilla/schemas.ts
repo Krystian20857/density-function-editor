@@ -144,6 +144,15 @@ export const schemas = new Map(Object.entries({
     'abs_x': {},
     'abs_y': {},
     'abs_z': {},
+    'sqrt': {
+        func: "densityFunction"
+    },
+    'smoothstep': {
+        f1: "densityFunction",
+        f2: "densityFunction",
+        distance: "densityFunction",
+        range: "number"
+    }
 }))
 
 export const noise_router_fields = [
